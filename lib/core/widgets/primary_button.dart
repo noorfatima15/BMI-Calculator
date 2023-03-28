@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/constants/typography.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -10,7 +11,8 @@ class PrimaryButton extends StatelessWidget {
         onPressed: () {},
         minWidth: MediaQuery.of(context).size.width,
         color: const Color(0xFFEB1555),
-        child: const Text('Calculate'),
+        height: 60.0,
+        child: const Text('Calculate', style: primaryButtonStyle),
       ),
     );
   }

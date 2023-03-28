@@ -1,6 +1,7 @@
-import 'package:bmi_calculator/core/widgets/custom_container.dart';
+import 'package:bmi_calculator/core/widgets/custom_card.dart';
 import 'package:bmi_calculator/core/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,7 +9,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          const Icon(
+            FontAwesomeIcons.lightbulb,
+            size: 15,
+          ),
+          Switch(
+            value: true,
+            onChanged: (value) {},
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Row(

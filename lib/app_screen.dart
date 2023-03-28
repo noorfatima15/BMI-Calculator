@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/presentation/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'presentation/screens/splash_screen.dart';
@@ -7,9 +8,10 @@ class AppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: SplashScreen(),
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
     );
   }
 }
