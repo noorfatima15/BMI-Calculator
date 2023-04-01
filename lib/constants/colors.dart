@@ -9,6 +9,7 @@ class ColorPalette {
   static const Color inactiveCardColor = Color(0xFF111328);
   static const Color secondaryColor = Color(0xFFEB1555);
   static const Color secondarySplashColor = Color(0x26C41C4C);
+  static const Color secondaryButtonColor = Color(0xFF4C4F5E);
 
   ///Text Colors
   static const Color primaryHeader = Color(0xFFFFFFFF);

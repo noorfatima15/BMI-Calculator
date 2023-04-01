@@ -9,5 +9,6 @@ class AppTheme {
       secondary: ColorPalette.secondaryColor,
     ),
     scaffoldBackgroundColor: ColorPalette.primaryColor,
+    iconTheme: const IconThemeData(color: ColorPalette.primaryHeader),
   );
 }

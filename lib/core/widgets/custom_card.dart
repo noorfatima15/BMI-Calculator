@@ -9,7 +9,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-      height: 200.0,
+      padding: const EdgeInsets.symmetric(vertical: 30),
       margin: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         color: ColorPalette.activeCardColor,

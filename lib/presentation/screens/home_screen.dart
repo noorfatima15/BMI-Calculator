@@ -1,5 +1,8 @@
+import 'package:bmi_calculator/constants/colors.dart';
+import 'package:bmi_calculator/constants/typography.dart';
 import 'package:bmi_calculator/core/widgets/custom_card.dart';
 import 'package:bmi_calculator/core/widgets/primary_button.dart';
+import 'package:bmi_calculator/core/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -27,35 +30,44 @@ class HomeScreen extends StatelessWidget {
             children: [
               CustomCard(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(FontAwesomeIcons.mars),
-                    Text('Male'),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Icon(
+                      FontAwesomeIcons.mars,
+                      size: 80.0,
+                    ),
+                    Text('Male', style: cardMainLabelStyle),
                   ],
                 ),
               ),
               CustomCard(
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Icon(FontAwesomeIcons.venus), Text('Female')],
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [Icon(FontAwesomeIcons.venus, size: 80), Text('Female', style: cardMainLabelStyle)],
               )),
             ],
           ),
           CustomCard(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Height'),
+                const Text('Height', style: cardSubLabelStyle),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('180'),
-                    Text('cm'),
+                    const Text('180', style: numberStyle),
+                    Text(
+                      'cm',
+                      style: cardSubLabelStyle.copyWith(color: ColorPalette.primaryHeader),
+                    )
                   ],
                 ),
                 Slider(
                   value: 180,
                   min: 120,
                   max: 220,
+                  activeColor: ColorPalette.secondaryColor,
+                  inactiveColor: ColorPalette.secondaryButtonColor,
                   onChanged: (value) {},
                 )
               ],
@@ -65,19 +77,20 @@ class HomeScreen extends StatelessWidget {
             children: [
               CustomCard(
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Weight'),
-                  Text('60'),
+                  const Text('Weight', style: cardSubLabelStyle),
+                  const Text('60', style: numberStyle),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      FloatingActionButton(
+                      SecondaryButton(
+                        icon: FontAwesomeIcons.minus,
                         onPressed: () {},
-                        child: const Icon(Icons.remove),
                       ),
-                      FloatingActionButton(
+                      SecondaryButton(
+                        icon: FontAwesomeIcons.plus,
                         onPressed: () {},
-                        child: const Icon(Icons.add),
                       ),
                     ],
                   )
@@ -85,19 +98,20 @@ class HomeScreen extends StatelessWidget {
               )),
               CustomCard(
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Age'),
-                  Text('20'),
+                  const Text('Age', style: cardSubLabelStyle),
+                  const Text('20', style: numberStyle),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      FloatingActionButton(
+                      SecondaryButton(
+                        icon: FontAwesomeIcons.minus,
                         onPressed: () {},
-                        child: const Icon(Icons.remove),
                       ),
-                      FloatingActionButton(
+                      SecondaryButton(
+                        icon: FontAwesomeIcons.plus,
                         onPressed: () {},
-                        child: const Icon(Icons.add),
                       ),
                     ],
                   )
@@ -105,7 +119,7 @@ class HomeScreen extends StatelessWidget {
               )),
             ],
           ),
-          PrimaryButton(),
+          const PrimaryButton(),
         ],
       ),
     );
