@@ -36,14 +36,14 @@ class HomeScreen extends StatelessWidget {
                       FontAwesomeIcons.mars,
                       size: 80.0,
                     ),
-                    Text('Male', style: cardMainLabelStyle),
+                    Text('MALE', style: cardMainLabelStyle),
                   ],
                 ),
               ),
               CustomCard(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [Icon(FontAwesomeIcons.venus, size: 80), Text('Female', style: cardMainLabelStyle)],
+                children: const [Icon(FontAwesomeIcons.venus, size: 80), Text('FEMALE', style: cardMainLabelStyle)],
               )),
             ],
           ),
@@ -51,9 +51,11 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Height', style: cardSubLabelStyle),
+                const Text('HEIGHT', style: cardSubLabelStyle),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
                   children: [
                     const Text('180', style: numberStyle),
                     Text(
@@ -79,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Weight', style: cardSubLabelStyle),
+                  const Text('WEIGHT', style: cardSubLabelStyle),
                   const Text('60', style: numberStyle),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Age', style: cardSubLabelStyle),
+                  const Text('AGE', style: cardSubLabelStyle),
                   const Text('20', style: numberStyle),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

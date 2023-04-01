@@ -11,9 +11,16 @@ class SecondaryButton extends StatelessWidget {
     return Container(
       height: 50,
       width: 50,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: ColorPalette.secondaryButtonColor,
+        boxShadow: [
+          BoxShadow(
+            color: ColorPalette.primaryHeader.withOpacity(0.1),
+            offset: const Offset(0, 2),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: IconButton(
         onPressed: onPressed,
