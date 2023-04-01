@@ -2,7 +2,8 @@ import 'package:bmi_calculator/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({Key? key}) : super(key: key);
+  final Widget child;
+  const CustomCard({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,7 @@ class CustomCard extends StatelessWidget {
         color: ColorPalette.activeCardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
+      child: child,
     ));
   }
 }

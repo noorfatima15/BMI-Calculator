@@ -89,11 +89,7 @@ flutter:
           weight: 400
         - asset: assets/fonts/Ubuntu-Light.ttf
           weight: 300
-          style: italic
-        - asset: assets/fonts/Ubuntu-LightItalic.ttf
-          weight: 300
-        - asset: assets/fonts/Ubuntu-MediumItalic.ttf
-          weight: 500
+
 
   #         style: italic
   #   - family: Trajan Pro
