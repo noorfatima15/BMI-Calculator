@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                             textBaseline: TextBaseline.alphabetic,
                             crossAxisAlignment: CrossAxisAlignment.baseline,
                             children: [
-                              Text('180',
+                              Text(state.height.toString(),
                                   style:
                                       numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
                               Text(
@@ -104,12 +104,14 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           Slider(
-                            value: 180,
-                            min: 120,
-                            max: 220,
+                            value: state.height.toDouble(),
+                            min: 12,
+                            max: 144,
                             activeColor: themeState.isDarkMode ? ColorPalette.secondaryColor : ColorPalette.activeCardColor,
                             inactiveColor: themeState.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.secondaryColor,
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              context.read<BmiBloc>().add(OnHeightChange(height: value.toInt()));
+                            },
                           )
                         ],
                       ),
@@ -121,18 +123,22 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('WEIGHT', style: cardSubLabelStyle),
-                            Text('60',
+                            Text(state.weight.toString(),
                                 style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 SecondaryButton(
                                   icon: FontAwesomeIcons.minus,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.read<BmiBloc>().add(OnWeightChange(weight: state.weight - 1));
+                                  },
                                 ),
                                 SecondaryButton(
                                   icon: FontAwesomeIcons.plus,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.read<BmiBloc>().add(OnWeightChange(weight: state.weight + 1));
+                                  },
                                 ),
                               ],
                             )
@@ -143,18 +149,22 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('AGE', style: cardSubLabelStyle),
-                            Text('20',
+                            Text(state.age.toString(),
                                 style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 SecondaryButton(
                                   icon: FontAwesomeIcons.minus,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.read<BmiBloc>().add(OnAgeChange(age: state.age - 1));
+                                  },
                                 ),
                                 SecondaryButton(
                                   icon: FontAwesomeIcons.plus,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.read<BmiBloc>().add(OnAgeChange(age: state.age + 1));
+                                  },
                                 ),
                               ],
                             )

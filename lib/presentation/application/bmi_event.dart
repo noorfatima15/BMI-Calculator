@@ -12,22 +12,12 @@ class OnHeightChange extends BmiEvent {
   OnHeightChange({required this.height});
 }
 
-class OnWeightIncrement extends BmiEvent {
+class OnWeightChange extends BmiEvent {
   final int weight;
-  OnWeightIncrement({required this.weight});
+  OnWeightChange({required this.weight});
 }
 
-class OnWeightDecrement extends BmiEvent {
-  final int weight;
-  OnWeightDecrement({required this.weight});
-}
-
-class OnAgeIncrement extends BmiEvent {
+class OnAgeChange extends BmiEvent {
   final int age;
-  OnAgeIncrement({required this.age});
-}
-
-class OnAgeDecrement extends BmiEvent {
-  final int age;
-  OnAgeDecrement({required this.age});
+  OnAgeChange({required this.age});
 }
