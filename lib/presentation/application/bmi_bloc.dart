@@ -10,6 +10,7 @@ class BmiBloc extends Bloc<BmiEvent, BmiState> {
     on<OnHeightChange>((event, emit) => onHeightChange(event, emit));
     on<OnWeightChange>((event, emit) => onWeightChange(event, emit));
     on<OnAgeChange>((event, emit) => onAgeChange(event, emit));
+    on<OnCalculateBmi>((event, emit) => onCalculateBmi(event, emit));
   }
 
   onGenderChange(OnGenderChange event, Emitter<BmiState> emit) {
@@ -31,4 +32,6 @@ class BmiBloc extends Bloc<BmiEvent, BmiState> {
       emit(state.copyWith(age: event.age));
     }
   }
+
+  onCalculateBmi(OnCalculateBmi event, Emitter<BmiState> emit) {}
 }

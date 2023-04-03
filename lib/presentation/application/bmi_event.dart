@@ -21,3 +21,5 @@ class OnAgeChange extends BmiEvent {
   final int age;
   OnAgeChange({required this.age});
 }
+
+class OnCalculateBmi extends BmiEvent {}

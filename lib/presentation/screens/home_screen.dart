@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                             textBaseline: TextBaseline.alphabetic,
                             crossAxisAlignment: CrossAxisAlignment.baseline,
                             children: [
-                              Text(state.height.toString(),
+                              Text('${state.height}',
                                   style:
                                       numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
                               Text(
@@ -123,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('WEIGHT', style: cardSubLabelStyle),
-                            Text(state.weight.toString(),
+                            Text('${state.weight}',
                                 style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('AGE', style: cardSubLabelStyle),
-                            Text(state.age.toString(),
+                            Text('${state.age}',
                                 style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
