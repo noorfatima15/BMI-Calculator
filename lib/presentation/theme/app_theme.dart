@@ -19,6 +19,8 @@ class AppTheme {
         color: ColorPalette.activeCardColor,
       ),
     ),
+    splashColor: ColorPalette.secondarySplashColor,
+    splashFactory: InkRipple.splashFactory,
     //add textColor
   );
   static final ThemeData darkTheme = ThemeData(
@@ -28,5 +30,12 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: ColorPalette.primaryColor,
     iconTheme: const IconThemeData(color: ColorPalette.primaryHeader),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: ColorPalette.primaryColor,
+      elevation: 0,
+      iconTheme: IconThemeData(
+        color: ColorPalette.primaryHeader,
+      ),
+    ),
   );
 }

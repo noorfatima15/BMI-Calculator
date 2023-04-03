@@ -1,8 +1,10 @@
 import 'package:bmi_calculator/constants/colors.dart';
+import 'package:bmi_calculator/constants/logic_constants.dart';
 import 'package:bmi_calculator/constants/typography.dart';
 import 'package:bmi_calculator/core/widgets/custom_card.dart';
 import 'package:bmi_calculator/core/widgets/primary_button.dart';
 import 'package:bmi_calculator/core/widgets/secondary_button.dart';
+import 'package:bmi_calculator/presentation/application/bmi_bloc.dart';
 import 'package:bmi_calculator/presentation/theme/bloc/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,126 +17,156 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, themeState) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              const Icon(
-                FontAwesomeIcons.lightbulb,
-                size: 15,
-              ),
-              Switch(
-                value: themeState.isDarkMode,
-                onChanged: (value) {
-                  context.read<ThemeBloc>().add(OnChangeTheme(isDarkMode: value));
-                },
-              ),
-            ],
-          ),
-          body: Column(
-            children: [
-              Row(
-                children: [
-                  CustomCard(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Icon(FontAwesomeIcons.mars, size: 80.0),
-                        Text('MALE',
-                            style:
-                                cardMainLabelStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
-                      ],
+        return BlocProvider(
+          create: (context) => BmiBloc(),
+          child: BlocBuilder<BmiBloc, BmiState>(
+            builder: (context, state) {
+              return Scaffold(
+                appBar: AppBar(
+                  actions: [
+                    const Icon(
+                      FontAwesomeIcons.lightbulb,
+                      size: 15,
                     ),
-                  ),
-                  CustomCard(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Icon(FontAwesomeIcons.venus, size: 80),
-                      Text('FEMALE',
-                          style: cardMainLabelStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
-                    ],
-                  )),
-                ],
-              ),
-              CustomCard(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('HEIGHT', style: cardSubLabelStyle),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      textBaseline: TextBaseline.alphabetic,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      children: [
-                        Text('180',
-                            style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
-                        Text(
-                          'cm',
-                          style: cardSubLabelStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                        )
-                      ],
+                    Switch(
+                      value: themeState.isDarkMode,
+                      onChanged: (value) {
+                        context.read<ThemeBloc>().add(OnChangeTheme(isDarkMode: value));
+                      },
                     ),
-                    Slider(
-                      value: 180,
-                      min: 120,
-                      max: 220,
-                      activeColor: themeState.isDarkMode ? ColorPalette.secondaryColor : ColorPalette.activeCardColor,
-                      inactiveColor: themeState.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.secondaryColor,
-                      onChanged: (value) {},
-                    )
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  CustomCard(
+                body: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CustomCard(
+                          backgroundColor: themeState.isDarkMode
+                              ? (state.gender == Gender.male ? ColorPalette.activeCardColor : ColorPalette.inactiveCardColor)
+                              : (!(themeState.isDarkMode) && state.gender == Gender.male)
+                                  ? ColorPalette.secondaryButtonColor.withOpacity(0.1)
+                                  : ColorPalette.primaryHeader,
+                          child: GestureDetector(
+                            onTap: () {
+                              context.read<BmiBloc>().add(OnGenderChange(gender: Gender.male));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Icon(FontAwesomeIcons.mars, size: 80.0),
+                                Text('MALE',
+                                    style: cardMainLabelStyle.copyWith(
+                                        color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
+                              ],
+                            ),
+                          ),
+                        ),
+                        CustomCard(
+                            backgroundColor: themeState.isDarkMode
+                                ? (state.gender == Gender.female ? ColorPalette.activeCardColor : ColorPalette.inactiveCardColor)
+                                : (!(themeState.isDarkMode) && state.gender == Gender.female)
+                                    ? ColorPalette.secondaryButtonColor.withOpacity(0.1)
+                                    : ColorPalette.primaryHeader,
+                            child: GestureDetector(
+                              onTap: () {
+                                context.read<BmiBloc>().add(OnGenderChange(gender: Gender.female));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(FontAwesomeIcons.venus, size: 80),
+                                  Text('FEMALE',
+                                      style: cardMainLabelStyle.copyWith(
+                                          color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                    CustomCard(
                       child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('WEIGHT', style: cardSubLabelStyle),
-                      Text('60',
-                          style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SecondaryButton(
-                            icon: FontAwesomeIcons.minus,
-                            onPressed: () {},
+                          const Text('HEIGHT', style: cardSubLabelStyle),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            textBaseline: TextBaseline.alphabetic,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            children: [
+                              Text('180',
+                                  style:
+                                      numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
+                              Text(
+                                'cm',
+                                style: cardSubLabelStyle.copyWith(
+                                    color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
+                              )
+                            ],
                           ),
-                          SecondaryButton(
-                            icon: FontAwesomeIcons.plus,
-                            onPressed: () {},
-                          ),
+                          Slider(
+                            value: 180,
+                            min: 120,
+                            max: 220,
+                            activeColor: themeState.isDarkMode ? ColorPalette.secondaryColor : ColorPalette.activeCardColor,
+                            inactiveColor: themeState.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.secondaryColor,
+                            onChanged: (value) {},
+                          )
                         ],
-                      )
-                    ],
-                  )),
-                  CustomCard(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('AGE', style: cardSubLabelStyle),
-                      Text('20',
-                          style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SecondaryButton(
-                            icon: FontAwesomeIcons.minus,
-                            onPressed: () {},
-                          ),
-                          SecondaryButton(
-                            icon: FontAwesomeIcons.plus,
-                            onPressed: () {},
-                          ),
-                        ],
-                      )
-                    ],
-                  )),
-                ],
-              ),
-              const PrimaryButton(),
-            ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        CustomCard(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('WEIGHT', style: cardSubLabelStyle),
+                            Text('60',
+                                style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {},
+                                ),
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                        CustomCard(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('AGE', style: cardSubLabelStyle),
+                            Text('20',
+                                style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {},
+                                ),
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                      ],
+                    ),
+                    const PrimaryButton(),
+                  ],
+                ),
+              );
+            },
           ),
         );
       },

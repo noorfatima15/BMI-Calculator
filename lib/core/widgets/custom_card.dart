@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
-
-  const CustomCard({Key? key, required this.child}) : super(key: key);
+  final Color? backgroundColor;
+  const CustomCard({Key? key, required this.child, this.backgroundColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class CustomCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 30),
           margin: const EdgeInsets.all(15.0),
           decoration: BoxDecoration(
-            color: state.isDarkMode ? ColorPalette.activeCardColor : ColorPalette.primaryHeader,
+            color: backgroundColor ?? (state.isDarkMode ? ColorPalette.activeCardColor : ColorPalette.primaryHeader),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: !state.isDarkMode
                 ? [

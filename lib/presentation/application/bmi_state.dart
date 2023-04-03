@@ -3,11 +3,11 @@ part of 'bmi_bloc.dart';
 class BmiState {
   final int height;
   final int weight;
-  final Gender gender;
+  final Gender? gender;
   final int age;
   BmiState({required this.height, required this.weight, required this.gender, required this.age});
   factory BmiState.initial() {
-    return BmiState(height: 12, weight: 20, gender: Gender.male, age: 8);
+    return BmiState(height: 12, weight: 20, gender: null, age: 8);
   }
   BmiState copyWith({
     int? height,

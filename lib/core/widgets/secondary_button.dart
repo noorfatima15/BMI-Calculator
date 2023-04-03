@@ -13,23 +13,23 @@ class SecondaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        return Container(
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: state.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.primaryHeader,
-            boxShadow: [
-              BoxShadow(
-                color: state.isDarkMode ? ColorPalette.primaryHeader.withOpacity(0.1) : ColorPalette.secondaryButtonColor.withOpacity(0.2),
-                offset: const Offset(0, 2),
-                blurRadius: 4,
-              ),
-            ],
-          ),
-          child: IconButton(
-            onPressed: onPressed,
-            icon: Icon(icon),
+        return InkWell(
+          onTap: onPressed,
+          child: Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: state.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.primaryHeader,
+              boxShadow: [
+                BoxShadow(
+                  color: state.isDarkMode ? ColorPalette.primaryHeader.withOpacity(0.1) : ColorPalette.secondaryButtonColor.withOpacity(0.2),
+                  offset: const Offset(0, 2),
+                  blurRadius: 4,
+                ),
+              ],
+            ),
+            child: Icon(icon),
           ),
         );
       },
