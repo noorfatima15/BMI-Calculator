@@ -17,7 +17,9 @@ class BmiBloc extends Bloc<BmiEvent, BmiState> {
   }
 
   onWeightChange(OnWeightChange event, Emitter<BmiState> emit) {
-    emit(state.copyWith(weight: event.weight));
+    if (event.weight != 0) {
+      emit(state.copyWith(weight: event.weight));
+    }
   }
 
   onHeightChange(OnHeightChange event, Emitter<BmiState> emit) {
@@ -25,6 +27,8 @@ class BmiBloc extends Bloc<BmiEvent, BmiState> {
   }
 
   onAgeChange(OnAgeChange event, Emitter<BmiState> emit) {
-    state.copyWith(age: event.age);
+    if (event.age != 0) {
+      emit(state.copyWith(age: event.age));
+    }
   }
 }

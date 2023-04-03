@@ -7,7 +7,7 @@ class BmiState {
   final int age;
   BmiState({required this.height, required this.weight, required this.gender, required this.age});
   factory BmiState.initial() {
-    return BmiState(height: 12, weight: 20, gender: null, age: 8);
+    return BmiState(height: 12, weight: 1, gender: null, age: 1);
   }
   BmiState copyWith({
     int? height,
