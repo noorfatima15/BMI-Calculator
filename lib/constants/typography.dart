@@ -8,3 +8,5 @@ const TextStyle primaryButtonStyle = TextStyle(fontSize: 22.0, fontFamily: 'Ubun
 const TextStyle cardMainLabelStyle = TextStyle(fontSize: 20.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.w700);
 const TextStyle cardSubLabelStyle =
     TextStyle(fontSize: 15.0, fontFamily: 'Ubuntu', color: ColorPalette.secondaryButtonColor, fontWeight: FontWeight.w700);
+const TextStyle resultHeader = TextStyle(fontSize: 50.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.w700);
+const TextStyle resultBmi = TextStyle(fontSize: 100.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.w700);

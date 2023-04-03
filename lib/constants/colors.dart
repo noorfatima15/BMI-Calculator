@@ -14,4 +14,5 @@ class ColorPalette {
   ///Text Colors
   static const Color primaryHeader = Color(0xFFFFFFFF);
   static const Color labelColor = Color(0xFF8D8E98);
+  static const Color resultTypeColor = Color(0xFF24D876);
 }

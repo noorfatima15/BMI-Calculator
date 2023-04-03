@@ -4,7 +4,9 @@ import 'package:bmi_calculator/constants/typography.dart';
 import 'package:bmi_calculator/core/widgets/custom_card.dart';
 import 'package:bmi_calculator/core/widgets/primary_button.dart';
 import 'package:bmi_calculator/core/widgets/secondary_button.dart';
+import 'package:bmi_calculator/core/widgets/text_rich.dart';
 import 'package:bmi_calculator/presentation/application/bmi_bloc.dart';
+import 'package:bmi_calculator/presentation/screens/result_screen.dart';
 import 'package:bmi_calculator/presentation/theme/bloc/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,20 +24,14 @@ class HomeScreen extends StatelessWidget {
           child: BlocBuilder<BmiBloc, BmiState>(
             builder: (context, state) {
               return Scaffold(
-                appBar: AppBar(
-                  actions: [
-                    const Icon(
-                      FontAwesomeIcons.lightbulb,
-                      size: 15,
-                    ),
-                    Switch(
+                appBar: AppBar(actions: [
+                  const Icon(FontAwesomeIcons.lightbulb, size: 15),
+                  Switch(
                       value: themeState.isDarkMode,
                       onChanged: (value) {
                         context.read<ThemeBloc>().add(OnChangeTheme(isDarkMode: value));
-                      },
-                    ),
-                  ],
-                ),
+                      })
+                ]),
                 body: Column(
                   children: [
                     Row(
@@ -88,21 +84,7 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('HEIGHT', style: cardSubLabelStyle),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textBaseline: TextBaseline.alphabetic,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            children: [
-                              Text('${state.height}',
-                                  style:
-                                      numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
-                              Text(
-                                'cm',
-                                style: cardSubLabelStyle.copyWith(
-                                    color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                              )
-                            ],
-                          ),
+                          TextRich(firstText: '${state.height}', secondText: 'cm'),
                           Slider(
                             value: state.height.toDouble(),
                             min: 12,
@@ -123,8 +105,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('WEIGHT', style: cardSubLabelStyle),
-                            Text('${state.weight}',
-                                style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
+                            TextRich(firstText: '${state.weight}', secondText: 'kg'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -149,8 +130,7 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('AGE', style: cardSubLabelStyle),
-                            Text('${state.age}',
-                                style: numberStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor)),
+                            TextRich(firstText: '${state.age}', secondText: 'yrs'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -172,7 +152,12 @@ class HomeScreen extends StatelessWidget {
                         )),
                       ],
                     ),
-                    const PrimaryButton(),
+                    PrimaryButton(
+                      title: 'CALCULATE',
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                      },
+                    ),
                   ],
                 ),
               );

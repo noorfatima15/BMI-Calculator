@@ -13,7 +13,7 @@ class CustomCard extends StatelessWidget {
     return Expanded(child: BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return Container(
-          padding: const EdgeInsets.symmetric(vertical: 30),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
           margin: const EdgeInsets.all(15.0),
           decoration: BoxDecoration(
             color: backgroundColor ?? (state.isDarkMode ? ColorPalette.activeCardColor : ColorPalette.primaryHeader),

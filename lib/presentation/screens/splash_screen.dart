@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/constants/colors.dart';
 import 'package:bmi_calculator/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
+        color: ColorPalette.primaryColor,
       ),
     );
   }
