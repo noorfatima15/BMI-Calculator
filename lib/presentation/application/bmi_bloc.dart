@@ -36,24 +36,27 @@ class BmiBloc extends Bloc<BmiEvent, BmiState> {
 
   onCalculateBmi(OnCalculateBmi event, Emitter<BmiState> emit) {
     final bmiResult = state.weight / pow(state.height / 100, 2);
-    print('bmiResult: $bmiResult');
     emit(state.copyWith(
       bmiResult: bmiResult,
+      isBmiCalculated: state.bmiResult != 0.0,
     ));
     if (bmiResult > 25) {
       emit(state.copyWith(
         resultType: Strings.overweight,
         resultMessage: Strings.overweightMessage,
+        isBmiCalculated: true,
       ));
     } else if (bmiResult > 18.5) {
       emit(state.copyWith(
         resultType: Strings.normal,
         resultMessage: Strings.normalWeightMessage,
+        isBmiCalculated: true,
       ));
     } else {
       emit(state.copyWith(
         resultType: Strings.underweight,
         resultMessage: Strings.underweightMessage,
+        isBmiCalculated: true,
       ));
     }
   }

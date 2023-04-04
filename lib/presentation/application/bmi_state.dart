@@ -8,6 +8,7 @@ class BmiState {
   final double bmiResult;
   final String resultType;
   final String resultMessage;
+  final bool isBmiCalculated;
   BmiState({
     required this.height,
     required this.weight,
@@ -16,6 +17,7 @@ class BmiState {
     required this.bmiResult,
     required this.resultType,
     required this.resultMessage,
+    required this.isBmiCalculated,
   });
   factory BmiState.initial() {
     return BmiState(
@@ -26,6 +28,7 @@ class BmiState {
       bmiResult: 0.0,
       resultType: '',
       resultMessage: '',
+      isBmiCalculated: false,
     );
   }
   BmiState copyWith({
@@ -36,6 +39,7 @@ class BmiState {
     double? bmiResult,
     String? resultType,
     String? resultMessage,
+    bool? isBmiCalculated,
   }) {
     return BmiState(
       height: height ?? this.height,
@@ -45,6 +49,7 @@ class BmiState {
       bmiResult: bmiResult ?? this.bmiResult,
       resultType: resultType ?? this.resultType,
       resultMessage: resultMessage ?? this.resultMessage,
+      isBmiCalculated: isBmiCalculated ?? this.isBmiCalculated,
     );
   }
 }

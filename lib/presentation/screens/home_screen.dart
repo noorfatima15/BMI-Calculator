@@ -177,26 +177,37 @@ class HomeScreen extends StatelessWidget {
                       )),
                     ],
                   ),
-                  PrimaryButton(
-                    title: 'CALCULATE',
-                    onPressed: () {
-                      if (state.gender != null) {
-                        print('bmi Result ${state.bmiResult}  ');
-                        context.read<BmiBloc>().add(OnCalculateBmi());
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen()));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            Strings.genderAlertMessage,
-                            style: labelStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                          ),
-                          behavior: SnackBarBehavior.floating,
-                          duration: const Duration(seconds: 2),
-                          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 1),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                        ));
+                  BlocListener<BmiBloc, BmiState>(
+                    listener: (context, bmiState) {
+                      if (bmiState.isBmiCalculated) {
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                        });
                       }
                     },
+                    child: PrimaryButton(
+                      title: 'CALCULATE',
+                      onPressed: () {
+                        if (state.gender != null) {
+                          context.read<BmiBloc>().add(OnCalculateBmi());
+                          // if (state.isBmiCalculated) {
+                          //   await Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                          // }
+                          //write code to navigate to result screen without double tap
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              Strings.genderAlertMessage,
+                              style: labelStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                            duration: const Duration(seconds: 2),
+                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 1),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          ));
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
