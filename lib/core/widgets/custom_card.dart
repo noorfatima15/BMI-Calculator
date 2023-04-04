@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CustomCard extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
+
   const CustomCard({Key? key, required this.child, this.backgroundColor}) : super(key: key);
 
   @override
