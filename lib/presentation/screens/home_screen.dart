@@ -22,170 +22,180 @@ class HomeScreen extends StatelessWidget {
       builder: (context, themeState) {
         return BlocBuilder<BmiBloc, BmiState>(
           builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(actions: [
-                const Icon(FontAwesomeIcons.lightbulb, size: 15),
-                Switch(
-                    value: themeState.isDarkMode,
-                    onChanged: (value) {
-                      context.read<ThemeBloc>().add(OnChangeTheme(isDarkMode: value));
-                    })
-              ]),
-              body: Column(
-                children: [
-                  Row(
-                    children: [
-                      CustomCard(
-                        backgroundColor: themeState.isDarkMode
-                            ? (state.gender == Gender.male ? ColorPalette.activeCardColor : ColorPalette.inactiveCardColor)
-                            : (!(themeState.isDarkMode) && state.gender == Gender.male)
-                                ? ColorPalette.secondaryButtonColor.withOpacity(0.1)
-                                : ColorPalette.primaryHeader,
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<BmiBloc>().add(OnGenderChange(gender: Gender.male));
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Icon(FontAwesomeIcons.mars, size: 80.0),
-                              Text('MALE',
-                                  style: cardMainLabelStyle.copyWith(
-                                      color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
-                            ],
-                          ),
-                        ),
-                      ),
-                      CustomCard(
+            return BlocListener<BmiBloc, BmiState>(
+              listener: (context, bmiState) {
+                if (bmiState.isBmiCalculated) {
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                  });
+                }
+              },
+              child: Scaffold(
+                appBar: AppBar(actions: [
+                  const Icon(FontAwesomeIcons.lightbulb, size: 15),
+                  Switch(
+                      value: themeState.isDarkMode,
+                      onChanged: (value) {
+                        context.read<ThemeBloc>().add(OnChangeTheme(isDarkMode: value));
+                      })
+                ]),
+                body: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CustomCard(
                           backgroundColor: themeState.isDarkMode
-                              ? (state.gender == Gender.female ? ColorPalette.activeCardColor : ColorPalette.inactiveCardColor)
-                              : (!(themeState.isDarkMode) && state.gender == Gender.female)
+                              ? (state.gender == Gender.male ? ColorPalette.activeCardColor : ColorPalette.inactiveCardColor)
+                              : (!(themeState.isDarkMode) && state.gender == Gender.male)
                                   ? ColorPalette.secondaryButtonColor.withOpacity(0.1)
                                   : ColorPalette.primaryHeader,
                           child: GestureDetector(
                             onTap: () {
-                              context.read<BmiBloc>().add(OnGenderChange(gender: Gender.female));
+                              context.read<BmiBloc>().add(OnGenderChange(gender: Gender.male));
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(FontAwesomeIcons.venus, size: 80),
-                                Text('FEMALE',
+                                const Icon(FontAwesomeIcons.mars, size: 80.0),
+                                Text('MALE',
                                     style: cardMainLabelStyle.copyWith(
                                         color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
                               ],
                             ),
-                          )),
-                    ],
-                  ),
-                  CustomCard(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        const Text('HEIGHT', style: cardSubLabelStyle),
-                        TextRich(firstText: '${state.height}', secondText: 'cm'),
-                        Expanded(
-                          child: Slider(
-                            value: state.height.toDouble(),
-                            min: 12,
-                            max: 144,
-                            activeColor: themeState.isDarkMode ? ColorPalette.secondaryColor : ColorPalette.activeCardColor,
-                            inactiveColor: themeState.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.secondaryColor,
-                            onChanged: (value) {
-                              context.read<BmiBloc>().add(OnHeightChange(height: value.toInt()));
-                            },
                           ),
-                        )
+                        ),
+                        CustomCard(
+                            backgroundColor: themeState.isDarkMode
+                                ? (state.gender == Gender.female ? ColorPalette.activeCardColor : ColorPalette.inactiveCardColor)
+                                : (!(themeState.isDarkMode) && state.gender == Gender.female)
+                                    ? ColorPalette.secondaryButtonColor.withOpacity(0.1)
+                                    : ColorPalette.primaryHeader,
+                            child: GestureDetector(
+                              onTap: () {
+                                context.read<BmiBloc>().add(OnGenderChange(gender: Gender.female));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(FontAwesomeIcons.venus, size: 80),
+                                  Text('FEMALE',
+                                      style: cardMainLabelStyle.copyWith(
+                                          color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor))
+                                ],
+                              ),
+                            )),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      CustomCard(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    CustomCard(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Text(Strings.weight, style: cardSubLabelStyle),
-                          TextRich(firstText: '${state.weight}', secondText: 'kg'),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SecondaryButton(
-                                icon: FontAwesomeIcons.minus,
-                                onPressed: () {
-                                  if (state.weight > 1) {
-                                    context.read<BmiBloc>().add(OnWeightChange(weight: state.weight - 1));
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content: Text(
-                                        Strings.weightAlertMessage,
-                                        style: labelStyle.copyWith(
-                                            color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      duration: const Duration(milliseconds: 500),
-                                      margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 10),
-                                    ));
-                                  }
-                                },
-                              ),
-                              SecondaryButton(
-                                icon: FontAwesomeIcons.plus,
-                                onPressed: () {
-                                  context.read<BmiBloc>().add(OnWeightChange(weight: state.weight + 1));
-                                },
-                              ),
-                            ],
+                          const Text('HEIGHT', style: cardSubLabelStyle),
+                          TextRich(firstText: '${state.height}', secondText: 'cm'),
+                          Expanded(
+                            child: Slider(
+                              value: state.height.toDouble(),
+                              min: 12,
+                              max: 144,
+                              activeColor: themeState.isDarkMode ? ColorPalette.secondaryColor : ColorPalette.activeCardColor,
+                              inactiveColor: themeState.isDarkMode ? ColorPalette.secondaryButtonColor : ColorPalette.secondaryColor,
+                              onChanged: (value) {
+                                context.read<BmiBloc>().add(OnHeightChange(height: value.toInt()));
+                              },
+                            ),
                           )
                         ],
-                      )),
-                      CustomCard(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('AGE', style: cardSubLabelStyle),
-                          TextRich(firstText: '${state.age}', secondText: 'yrs'),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SecondaryButton(
-                                icon: FontAwesomeIcons.minus,
-                                onPressed: () {
-                                  if (state.age > 1) {
-                                    context.read<BmiBloc>().add(OnAgeChange(age: state.age - 1));
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content: Text(
-                                        Strings.ageAlertMessage,
-                                        style: labelStyle.copyWith(
-                                            color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                                      ),
-                                    ));
-                                  }
-                                },
-                              ),
-                              SecondaryButton(
-                                icon: FontAwesomeIcons.plus,
-                                onPressed: () {
-                                  context.read<BmiBloc>().add(OnAgeChange(age: state.age + 1));
-                                },
-                              ),
-                            ],
-                          )
-                        ],
-                      )),
-                    ],
-                  ),
-                  BlocListener<BmiBloc, BmiState>(
-                    listener: (context, bmiState) {
-                      if (bmiState.isBmiCalculated) {
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
-                        });
-                      }
-                    },
-                    child: PrimaryButton(
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        CustomCard(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(Strings.weight, style: cardSubLabelStyle),
+                            TextRich(firstText: '${state.weight}', secondText: 'kg'),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    if (state.weight > 1) {
+                                      context.read<BmiBloc>().add(OnWeightChange(weight: state.weight - 1));
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text(
+                                          Strings.weightAlertMessage,
+                                          style: labelStyle.copyWith(
+                                              color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
+                                        ),
+                                        behavior: SnackBarBehavior.floating,
+                                        duration: const Duration(milliseconds: 500),
+                                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 10),
+                                      ));
+                                    }
+                                  },
+                                ),
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    context.read<BmiBloc>().add(OnWeightChange(weight: state.weight + 1));
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                        CustomCard(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('AGE', style: cardSubLabelStyle),
+                            TextRich(firstText: '${state.age}', secondText: 'yrs'),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    if (state.age > 1) {
+                                      context.read<BmiBloc>().add(OnAgeChange(age: state.age - 1));
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text(
+                                          Strings.ageAlertMessage,
+                                          style: labelStyle.copyWith(
+                                              color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
+                                        ),
+                                      ));
+                                    }
+                                  },
+                                ),
+                                SecondaryButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    context.read<BmiBloc>().add(OnAgeChange(age: state.age + 1));
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                      ],
+                    ),
+                    // BlocListener<BmiBloc, BmiState>(
+                    //   listener: (context, bmiState) {
+                    //     if (bmiState.isBmiCalculated) {
+                    //       Future.delayed(const Duration(milliseconds: 500), () {
+                    //         Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                    //       });
+                    //     }
+                    //   },
+                    //   child:
+
+                    PrimaryButton(
                       title: 'CALCULATE',
                       onPressed: () {
                         if (state.gender != null) {
@@ -208,8 +218,9 @@ class HomeScreen extends StatelessWidget {
                         }
                       },
                     ),
-                  ),
-                ],
+                    // ),
+                  ],
+                ),
               ),
             );
           },
