@@ -154,23 +154,6 @@ class HomeScreen extends StatelessWidget {
                                 onPressed: () {
                                   if (state.age > 1) {
                                     context.read<BmiBloc>().add(OnAgeChange(age: state.age - 1));
-                                    // await Future.delayed(
-                                    //   const Duration(milliseconds: 500),
-                                    //   () {
-                                    //     return Navigator.push(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //           builder: (context) => const ResultScreen(),
-                                    //         ));
-                                    //   },
-                                    // );
-                                    Future.delayed(const Duration(milliseconds: 500), () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => const ResultScreen(),
-                                          ));
-                                    });
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                       content: Text(
@@ -206,13 +189,15 @@ class HomeScreen extends StatelessWidget {
 
                   PrimaryButton(
                     title: 'CALCULATE',
-                    onPressed: () {
+                    onPressed: () async {
                       if (state.gender != null) {
                         context.read<BmiBloc>().add(OnCalculateBmi());
-                        // if (state.isBmiCalculated) {
-                        //   await Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
-                        // }
-                        //write code to navigate to result screen without double tap
+                        await Future.delayed(
+                          const Duration(milliseconds: 1),
+                          () {
+                            return Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                          },
+                        );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
