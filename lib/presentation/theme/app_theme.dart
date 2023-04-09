@@ -5,27 +5,31 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
   static final ThemeData lightTheme = ThemeData(
-    colorScheme: const ColorScheme.light(
-      primary: ColorPalette.primaryColor,
-      secondary: ColorPalette.secondaryColor,
-    ),
-    scaffoldBackgroundColor: ColorPalette.primaryHeader,
-    iconTheme: const IconThemeData(
-      color: ColorPalette.activeCardColor,
-    ),
-    appBarTheme: AppBarTheme(
-      backgroundColor: ColorPalette.primaryHeader,
-      elevation: 0,
-      centerTitle: true,
-      titleTextStyle: labelStyle.copyWith(color: ColorPalette.activeCardColor),
+      colorScheme: const ColorScheme.light(
+        primary: ColorPalette.primaryColor,
+        secondary: ColorPalette.secondaryColor,
+      ),
+      scaffoldBackgroundColor: ColorPalette.primaryHeader,
       iconTheme: const IconThemeData(
         color: ColorPalette.activeCardColor,
       ),
-    ),
-    splashColor: ColorPalette.secondarySplashColor,
-    splashFactory: InkRipple.splashFactory,
-    //add textColor
-  );
+      appBarTheme: AppBarTheme(
+        backgroundColor: ColorPalette.primaryHeader,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: labelStyle.copyWith(color: ColorPalette.activeCardColor),
+        iconTheme: const IconThemeData(
+          color: ColorPalette.activeCardColor,
+        ),
+      ),
+      splashColor: ColorPalette.secondarySplashColor,
+      splashFactory: InkRipple.splashFactory,
+      snackBarTheme: SnackBarThemeData(
+        contentTextStyle: labelStyle.copyWith(color: ColorPalette.secondaryColor),
+        behavior: SnackBarBehavior.floating,
+      )
+      //add textColor
+      );
   static final ThemeData darkTheme = ThemeData(
     colorScheme: const ColorScheme.dark(
       primary: ColorPalette.primaryColor,
@@ -43,6 +47,10 @@ class AppTheme {
       iconTheme: const IconThemeData(
         color: ColorPalette.primaryHeader,
       ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      contentTextStyle: labelStyle.copyWith(color: ColorPalette.secondaryColor),
+      backgroundColor: ColorPalette.primaryHeader,
     ),
   );
 }

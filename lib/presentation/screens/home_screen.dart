@@ -3,6 +3,7 @@ import 'package:bmi_calculator/constants/logic_constants.dart';
 import 'package:bmi_calculator/constants/strings.dart';
 import 'package:bmi_calculator/constants/typography.dart';
 import 'package:bmi_calculator/core/widgets/custom_card.dart';
+import 'package:bmi_calculator/core/widgets/custom_snackbar.dart';
 import 'package:bmi_calculator/core/widgets/primary_button.dart';
 import 'package:bmi_calculator/core/widgets/secondary_button.dart';
 import 'package:bmi_calculator/core/widgets/text_rich.dart';
@@ -117,16 +118,7 @@ class HomeScreen extends StatelessWidget {
                                   if (state.weight > 1) {
                                     context.read<BmiBloc>().add(OnWeightChange(weight: state.weight - 1));
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content: Text(
-                                        Strings.weightAlertMessage,
-                                        style: labelStyle.copyWith(
-                                            color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      duration: const Duration(milliseconds: 500),
-                                      margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 10),
-                                    ));
+                                    CustomSnackBar.showSnackBar(context: context, message: Strings.weightAlertMessage);
                                   }
                                 },
                               ),
@@ -155,13 +147,7 @@ class HomeScreen extends StatelessWidget {
                                   if (state.age > 1) {
                                     context.read<BmiBloc>().add(OnAgeChange(age: state.age - 1));
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content: Text(
-                                        Strings.ageAlertMessage,
-                                        style: labelStyle.copyWith(
-                                            color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                                      ),
-                                    ));
+                                    CustomSnackBar.showSnackBar(context: context, message: Strings.ageAlertMessage);
                                   }
                                 },
                               ),
@@ -177,38 +163,19 @@ class HomeScreen extends StatelessWidget {
                       )),
                     ],
                   ),
-                  // BlocListener<BmiBloc, BmiState>(
-                  //   listener: (context, bmiState) {
-                  //     if (bmiState.isBmiCalculated) {
-                  //       Future.delayed(const Duration(milliseconds: 500), () {
-                  //         Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
-                  //       });
-                  //     }
-                  //   },
-                  //   child:
-
                   PrimaryButton(
                     title: 'CALCULATE',
-                    onPressed: () async {
+                    onPressed: () {
                       if (state.gender != null) {
                         context.read<BmiBloc>().add(OnCalculateBmi());
-                        await Future.delayed(
+                        Future.delayed(
                           const Duration(milliseconds: 1),
                           () {
                             return Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
                           },
                         );
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            Strings.genderAlertMessage,
-                            style: labelStyle.copyWith(color: themeState.isDarkMode ? ColorPalette.primaryHeader : ColorPalette.secondaryColor),
-                          ),
-                          behavior: SnackBarBehavior.floating,
-                          duration: const Duration(seconds: 2),
-                          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 1),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                        ));
+                        CustomSnackBar.showSnackBar(context: context, message: Strings.genderAlertMessage);
                       }
                     },
                   ),
